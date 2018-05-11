@@ -1,0 +1,199 @@
+$grey: #121214;
+$mid-grey: lighten($grey, 3.5%);
+$light-grey: lighten($grey, 5%);
+$lighter-grey: lighten($grey, 8%);
+$dark-grey: darken($grey, 2%);
+$white: #fff;
+$blue: #02a9ea;
+
+* {
+  outline: none !important;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  margin: 0;
+  background: $grey;
+  align-items: center;
+  justify-content: center;
+}
+
+.text {
+  width: 100%;
+  margin: 0;
+  font-weight: normal;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.btn {
+  padding: 20px;
+  background: none;
+  font-size: 20px;
+  color: $white;
+  border: none;
+  cursor: pointer;
+}
+
+.player {
+  $block: &;
+  width: 300px;
+  background: $mid-grey;
+  font-family: 'Roboto';
+  color: $white;
+  box-shadow: 0 0 30px 0 $dark-grey;
+  &__wrapper {
+    position: relative;
+    &:hover {
+      #{$block}__options {
+        opacity: 1;
+      }
+    }
+  }
+  &__holder {
+    position: relative;
+    height: 200px;
+    perspective: 500px;
+    &--flipped {
+      #{$block}__cover {
+        transform: rotateY(-180deg);
+      }
+      #{$block}__list {
+        transform: rotateY(0);
+      }
+    }
+  }
+  &__cover {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: center center / cover no-repeat;
+    transition: all .3s ease-out;
+    backface-visibility: hidden;
+    z-index: 100;
+    &:after {
+      display: none;
+      width: 100%;
+      height: 100%;
+      background: rgba(18, 18, 20, .6);
+      content: '?';
+      font-size: 100px;
+      font-weight: 300;
+      align-items: center;
+      justify-content: center;
+    }
+    &--error {
+      &:after {
+        display: flex;
+      }
+    }
+  }
+  &__list {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: scroll;
+    transform: rotateY(180deg);
+    transition: all .3s ease-out;
+    backface-visibility: hidden;
+  }
+  &__options {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    opacity: 0;
+    transition: all .3s ease-out;
+  }
+  &__info {
+    padding: 20px 25px;
+  }
+  &__title,
+  &__artist {
+    @extend .text;
+  }
+  &__title {
+    margin-bottom: 5px;
+    font-size: 28px;
+  }
+  &__artist {
+    font-size: 18px;
+  }
+  &__progressbar-holder {
+    width: 100%;
+    height: 3px;
+    cursor: pointer;
+  }
+  &__progressbar {
+    width: 0;
+    height: 100%;
+    background: $white;
+    opacity: .8;
+    box-shadow: 0 0 8px 0 rgba(255, 255, 255, .3), 0 0 3px 0 rgba(255, 255, 255, .3);
+    transition: all .2s linear;
+  }
+  &__controls {
+    display: flex;
+    background: $light-grey;
+  }
+}
+
+.controls {
+  &__btn {
+    background: $light-grey;
+    transition: all .2s linear;
+    flex-grow: 1;
+    &:hover {
+      background: $mid-grey;
+    }
+  }
+}
+
+.tracks {
+  background: $light-grey;
+  &__track {
+    padding: 13px 25px;
+    border-bottom: 1px solid $lighter-grey;
+    cursor: pointer;
+    &:last-child {
+      border: none;
+    }
+    &--active {
+      background: $lighter-grey;
+    }
+  }
+  &__list {
+    margin: 0;
+    padding: 0;
+  }
+  &__title,
+  &__artist {
+    @extend .text;
+  }
+  &__title {
+    margin-bottom: 4px;
+    font-size: 17px;
+  }
+  &__artist {
+    font-size: 12px;
+  }
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  &__btn {
+    transition: all .1s linear;
+    &--active {
+      color: $blue;
+    }
+  }
+}
